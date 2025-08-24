@@ -50,6 +50,15 @@ function clearBackgroundColor() {
     });
 }
 
+function equals() {
+    if (num1 !== null && operator !== '') {
+        num2 = +display.textContent;
+        clearBackgroundColor();
+        num1 = operate(operator, num1, num2);
+        display.textContent = num1;
+    }
+}
+
 clearButton.addEventListener("click", function(e) {
     display.textContent = "0";
     num1 = null;
@@ -82,6 +91,11 @@ opButtons.forEach(button => {
         } else {
             num2 = +display.textContent;
         }
+
+        if (num1 !== null && num2 !== null && operator !== '') {
+            equals();
+        }
+
         operator = button.id;
         clearBackgroundColor();
         button.style.backgroundColor = "yellow";
@@ -89,10 +103,5 @@ opButtons.forEach(button => {
 });
 
 equalButton.addEventListener("click", function(e) {
-    if (num1 !== null && operator !== '') {
-        num2 = +display.textContent;
-        clearBackgroundColor();
-        num1 = operate(operator, num1, num2);
-        display.textContent = num1;
-    }
+    equals();
 });
