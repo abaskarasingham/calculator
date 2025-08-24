@@ -50,16 +50,41 @@ function clearBackgroundColor() {
     });
 }
 
+function operatorSelected() {
+    let bool = false;
+
+    opButtons.forEach(button => {
+        if (button.style.backgroundColor) {
+            operator = button.id;
+            button.style.backgroundColor = "";
+            bool = true;
+        }
+    });
+
+    return bool;
+}
+
 function equals() {
     if (num1 !== null && operator !== '') {
+
         if (num2 !== null) {
             num1 = operate(operator, num1, num2);
         } else {
             num2 = +display.textContent;
             num1 = operate(operator, num1, num2);
         }
+
         clearBackgroundColor();
         display.textContent = num1;
+
+    } else if (num1 !== null && operatorSelected()) {
+
+        num2 = +display.textContent;
+        num1 = operate(operator, num1, num2);
+
+        clearBackgroundColor();
+        display.textContent = num1;
+
     }
 }
 
@@ -73,6 +98,7 @@ clearButton.addEventListener("click", function(e) {
 
 digitButtons.forEach(button => {
     button.addEventListener("click", function(e) {
+
         opButtons.forEach(button => {
             if (button.style.backgroundColor) {
                 display.textContent = "0";
@@ -81,20 +107,18 @@ digitButtons.forEach(button => {
             }
         });
 
-        if (display.textContent !== "0") {
-            display.textContent += button.textContent;
-        } else {
-            display.textContent = button.textContent;
-        }
+        (display.textContent !== "0") ? display.textContent += button.textContent : display.textContent = button.textContent;
 
         if (num1 === null || operator === '') {
             num1 = +display.textContent;
         }
+
     });
 });
 
 opButtons.forEach(button => {
     button.addEventListener("click", function(e) {
+
         if (num1 !== null && num2 === null && operator !== '') {
             equals();
         }
@@ -104,6 +128,7 @@ opButtons.forEach(button => {
 
         clearBackgroundColor();
         button.style.backgroundColor = "yellow";
+        
     });
 });
 
