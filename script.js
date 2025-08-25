@@ -80,14 +80,11 @@ function equals() {
 
         clearBackgroundColor();
         if (num1 === Infinity || num1 === -Infinity || Number.isNaN(num1)) {
-            num1 = "The world blew up...";
-            display.textContent = num1;
-        } else if (Number.isInteger(num1)) {
-            display.textContent = num1;
-        } else {
+            num1 = "The world blew up";
+        } else if (!Number.isInteger(num1)) {
             num1 = num1.toFixed(2);
-            display.textContent = num1;
         }
+        display.textContent = num1;
 
         if (display.textContent.includes(".")) {
             decimalButton.disabled = true;
@@ -167,7 +164,8 @@ opButtons.forEach(button => {
 
         clearBackgroundColor();
         button.style.backgroundColor = "yellow";
-        
+        decimalButton.disabled = false;
+        backButton.disabled = true;
     });
 });
 
