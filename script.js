@@ -76,11 +76,13 @@ function equals() {
 
         clearBackgroundColor();
         if (num1 === Infinity || num1 === -Infinity || Number.isNaN(num1)) {
-            display.textContent = "The world blew up...";
+            num1 = "The world blew up...";
+            display.textContent = num1;
         } else if (Number.isInteger(num1)) {
-            display.textContent = num1
+            display.textContent = num1;
         } else {
-            display.textContent = num1.toFixed(2)
+            num1 = num1.toFixed(2);
+            display.textContent = num1;
         }
 
     }
@@ -96,6 +98,10 @@ clearButton.addEventListener("click", function(e) {
 
 digitButtons.forEach(button => {
     button.addEventListener("click", function(e) {
+
+        if (display.textContent == num1 && num2 !== null && operator !== '') {
+            display.textContent = "0";
+        }
 
         opButtons.forEach(button => {
             if (button.style.backgroundColor) {
