@@ -43,6 +43,7 @@ const opButtons = Array.from(document.querySelectorAll(".opButton"));
 const display = document.querySelector(".display");
 const clearButton = document.querySelector(".clearButton");
 const equalButton = document.querySelector(".equalButton");
+const decimalButton = document.querySelector(".decimalButton");
 
 function clearBackgroundColor() {
     opButtons.forEach(button => {
@@ -85,6 +86,9 @@ function equals() {
             display.textContent = num1;
         }
 
+        if (display.textContent.includes(".")) {
+            decimalButton.disabled = true;
+        }
     }
 }
 
@@ -94,6 +98,7 @@ clearButton.addEventListener("click", function(e) {
     num2 = null;
     operator = '';
     clearBackgroundColor();
+    decimalButton.disabled = false;
 });
 
 digitButtons.forEach(button => {
@@ -101,6 +106,7 @@ digitButtons.forEach(button => {
 
         if (display.textContent == num1 && num2 !== null && operator !== '') {
             display.textContent = "0";
+            decimalButton.disabled = false;
         }
 
         opButtons.forEach(button => {
@@ -111,10 +117,19 @@ digitButtons.forEach(button => {
             }
         });
 
-        (display.textContent !== "0") ? display.textContent += button.textContent : display.textContent = button.textContent;
+        if (display.textContent !== "0" || (display.textContent === "0" && button.textContent === ".") ) {
+            display.textContent += button.textContent;
+        } else {
+            display.textContent = button.textContent;
+        }
+        // (display.textContent !== "0") ? display.textContent += button.textContent : display.textContent = button.textContent;
 
         if (num1 === null || operator === '') {
             num1 = +display.textContent;
+        }
+
+        if (display.textContent.includes(".")) {
+            decimalButton.disabled = true;
         }
 
     });
