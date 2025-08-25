@@ -44,6 +44,7 @@ const display = document.querySelector(".display");
 const clearButton = document.querySelector(".clearButton");
 const equalButton = document.querySelector(".equalButton");
 const decimalButton = document.querySelector(".decimalButton");
+const backButton = document.querySelector(".backButton");
 
 function clearBackgroundColor() {
     opButtons.forEach(button => {
@@ -67,6 +68,8 @@ function operatorSelected() {
 
 function equals() {
     if (num1 !== null && (operator !== '' || operatorSelected()) ) {
+
+        backButton.disabled = true;
 
         if (num2 !== null) {
             num1 = operate(operator, num1, num2);
@@ -92,6 +95,20 @@ function equals() {
     }
 }
 
+backButton.addEventListener("click", function(e) {
+
+    display.textContent = display.textContent.slice(0, -1);
+
+    if (display.textContent === "") {
+        display.textContent = "0";
+    }
+
+    if (!display.textContent.includes(".")) {
+        decimalButton.disabled = false;
+    }
+
+});
+
 clearButton.addEventListener("click", function(e) {
     display.textContent = "0";
     num1 = null;
@@ -99,10 +116,13 @@ clearButton.addEventListener("click", function(e) {
     operator = '';
     clearBackgroundColor();
     decimalButton.disabled = false;
+    backButton.disabled = false;
 });
 
 digitButtons.forEach(button => {
     button.addEventListener("click", function(e) {
+
+        backButton.disabled = false;
 
         if (display.textContent == num1 && num2 !== null && operator !== '') {
             display.textContent = "0";
@@ -114,6 +134,7 @@ digitButtons.forEach(button => {
                 display.textContent = "0";
                 operator = button.id;
                 button.style.backgroundColor = "";
+                decimalButton.disabled = false;
             }
         });
 
@@ -122,14 +143,13 @@ digitButtons.forEach(button => {
         } else {
             display.textContent = button.textContent;
         }
-        // (display.textContent !== "0") ? display.textContent += button.textContent : display.textContent = button.textContent;
+        
+        if (display.textContent.includes(".")) {
+            decimalButton.disabled = true;
+        }
 
         if (num1 === null || operator === '') {
             num1 = +display.textContent;
-        }
-
-        if (display.textContent.includes(".")) {
-            decimalButton.disabled = true;
         }
 
     });
