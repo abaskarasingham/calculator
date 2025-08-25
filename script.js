@@ -65,7 +65,7 @@ function operatorSelected() {
 }
 
 function equals() {
-    if (num1 !== null && operator !== '') {
+    if (num1 !== null && (operator !== '' || operatorSelected()) ) {
 
         if (num2 !== null) {
             num1 = operate(operator, num1, num2);
@@ -75,15 +75,13 @@ function equals() {
         }
 
         clearBackgroundColor();
-        display.textContent = num1;
-
-    } else if (num1 !== null && operatorSelected()) {
-
-        num2 = +display.textContent;
-        num1 = operate(operator, num1, num2);
-
-        clearBackgroundColor();
-        display.textContent = num1;
+        if (num1 === Infinity || num1 === -Infinity || Number.isNaN(num1)) {
+            display.textContent = "The world blew up...";
+        } else if (Number.isInteger(num1)) {
+            display.textContent = num1
+        } else {
+            display.textContent = num1.toFixed(2)
+        }
 
     }
 }
