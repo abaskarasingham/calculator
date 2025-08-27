@@ -14,8 +14,8 @@ body {
 .display {
     font-size: 50px;
     padding: 35px;
-    flex: 1;
     text-align: end;
+    height: 58px;
 }
 
 .calc-container {
